@@ -29,10 +29,26 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        header img {
+            height: 50px;
+            margin-right: 15px;
         }
 
         header h1 {
             font-size: 2rem;
+            background: linear-gradient(to right, #aaa, gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite alternate;
         }
 
         nav {
@@ -44,34 +60,40 @@
             text-decoration: none;
             margin-left: 20px;
             font-weight: bold;
-            transition: color 0.3s;
+            transition: color 0.3s, border-bottom 0.3s;
+            padding-bottom: 5px;
         }
 
-        nav a:hover {
+        nav a.active, nav a:hover {
             color: #f39c12;
+            border-bottom: 2px solid #f39c12;
         }
 
         .hero {
-            background: #111;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('') no-repeat center center/cover;
             padding: 120px 40px;
+            padding-top: 180px;
             text-align: center;
             color: #fff;
             animation: fadeIn 1.5s ease-in-out;
+            background-color: #111;
         }
 
         .hero h2 {
             font-size: 2.8rem;
             margin-bottom: 20px;
+            animation: slideUp 1s ease-in-out;
         }
 
         .hero p {
             font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto;
+            animation: fadeIn 2s ease-in;
         }
 
         .section {
-            padding: 60px 40px;
+            padding: 80px 40px;
             animation: slideUp 1s ease-in-out;
         }
 
@@ -79,10 +101,12 @@
             font-size: 2rem;
             margin-bottom: 20px;
             color: #000;
+            animation: fadeIn 2s ease-in;
         }
 
         .section p {
             max-width: 800px;
+            animation: fadeIn 2s ease-in;
         }
 
         .grid {
@@ -97,6 +121,7 @@
             padding: 20px;
             background: #fafafa;
             transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeIn 2s ease-in;
         }
 
         .box:hover {
@@ -124,15 +149,34 @@
             font-size: 0.9rem;
         }
 
+        #contact p {
+            background: #f2f2f2;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.8;
+            max-width: 600px;
+            animation: fadeIn 2s ease-in;
+        }
+
+        .disclaimer {
+            font-size: 0.85rem;
+            color: #777;
+            text-align: center;
+            padding: 20px 40px 40px;
+            background-color: #f9f9f9;
+        }
+
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
                 align-items: flex-start;
             }
+
             nav a {
                 display: block;
                 margin: 10px 0;
             }
+
             .hero h2 {
                 font-size: 2rem;
             }
@@ -143,16 +187,29 @@
             to { opacity: 1; }
         }
 
+        @keyframes fadeInDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
         @keyframes slideUp {
             from { transform: translateY(30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
         }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>Jinvani Advisory</h1>
+        <div style="display: flex; align-items: center;">
+            <img src="Gemini_Generated_Image_b2nthyb2nthyb2nt-removebg-preview.png" alt="Jinvani Advisory Logo">
+            <h1>Jinvani <span style="background: linear-gradient(to right, gold, goldenrod); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Advisory</span></h1>
+        </div>
         <nav>
             <a href="#about">About</a>
             <a href="#services">Services</a>
@@ -216,13 +273,40 @@
 
     <section class="section" id="contact">
         <h3>Contact Us</h3>
-        <p>Email: contact@jinvaniadvisory.com<br>Phone: +91 9374102722<br>Location: Rajkot, India</p>
+        <p>
+            <strong>Email:</strong> contact@jinvaniadvisory.com<br>
+            <strong>Phone:</strong> +91 9374102722<br>
+            <strong>Location:</strong> Rajkot, India
+        </p>
     </section>
+
+    <div class="disclaimer">
+        <p>This website and its contents are for informational purposes only and do not constitute legal or financial advice. All trademarks are property of their respective owners.</p>
+    </div>
 
     <footer class="footer">
         <p>&copy; 2025 Jinvani Advisory. All rights reserved.</p>
     </footer>
+
+    <script>
+        const navLinks = document.querySelectorAll('nav a');
+
+        window.addEventListener('scroll', () => {
+            const fromTop = window.scrollY + 120;
+
+            navLinks.forEach(link => {
+                const section = document.querySelector(link.getAttribute('href'));
+                if (
+                    section.offsetTop <= fromTop &&
+                    section.offsetTop + section.offsetHeight > fromTop
+                ) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
-
